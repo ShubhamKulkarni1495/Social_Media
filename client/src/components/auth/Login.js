@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 
 const Login = ({ login, isAuthenticated }) => {
+
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+
   });
 
   const { email, password } = formData;
@@ -23,7 +25,6 @@ const Login = ({ login, isAuthenticated }) => {
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
-
   return (
     <section className="container">
       <h1 className="large text-primary">Sign In</h1>

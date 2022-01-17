@@ -4,16 +4,41 @@ import { Link, Navigate } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
   });
 
-  const { name, email, password, password2 } = formData;
+  // const [file,setfile] = useState();
+
+  // const onFormSubmit =(e) =>{
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append('photo',file);
+
+  //   const config = {
+  //     headers:{
+  //       'Content-Type':'multipart/form-data'
+  //     },
+  //   };
+  //   const url = "http://localhost:5000/api/profile/upload"
+  //   axios.post(url,formData,config).then((response) =>{
+  //     console.log(response)
+  //   })
+  // }
+
+  // const onInputChange = (e) =>{
+  //   setfile(e.target.files[0])
+  // }
+
+  const { name, email, password, password2} = formData;
+
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,6 +54,28 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
+  }
+
+  const file = {
+    selectedFile:''
+  }
+
+  const fileSelectHandler = (e) => {
+    this.setState({selectedFile:e.target.files[0]})
+  }
+  
+  const fileUploadHandler = () => {
+    const config = {
+          headers:{
+            'content-type':'multipart/form-data'
+          },
+        };
+    const fd = new FormData();
+    fd.append('photo',file)
+    const url = "http://localhost:5000/api/profile/upload";
+    axios.post(url,fd,config).then(res => {
+      console.log(res);
+    })
   }
 
   return (
@@ -78,6 +125,16 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={onChange}
           />
         </div>
+        <div className="from-group">
+          <input type="file" onChange={fileSelectHandler}/>
+            <button onClick={fileUploadHandler}>Upload</button>
+        </div>
+        {/* <div className="form-group">
+          <form onSubmit ={onFormSubmit}>
+            <input type="file" name="photo" onChange={onInputChange} />
+            <button type="submit">Upload</button>
+          </form>
+        </div> */}
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">

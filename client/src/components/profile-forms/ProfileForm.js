@@ -3,7 +3,6 @@ import { Link, useMatch, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
-
 /*
   NOTE: declare initialState outside of component
   so that it doesn't trigger a useEffect
@@ -93,6 +92,7 @@ const ProfileForm = ({
           ? ` Let's get some information to make your`
           : ' Add some changes to your profile'}
       </p>
+      
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
@@ -181,7 +181,6 @@ const ProfileForm = ({
           />
           <small className="form-text">Tell us a little about yourself</small>
         </div>
-
         <div className="my-2">
           <button
             onClick={() => toggleSocialInputs(!displaySocialInputs)}
@@ -192,6 +191,7 @@ const ProfileForm = ({
           </button>
           <span>Optional</span>
         </div>
+
 
         {displaySocialInputs && (
           <Fragment>
@@ -251,6 +251,7 @@ const ProfileForm = ({
             </div>
           </Fragment>
         )}
+
 
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">
